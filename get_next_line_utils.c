@@ -6,33 +6,17 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/19 13:05:24 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/21 14:40:37 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2019/11/21 15:37:00 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int			get_strlen(char *str)
-{
-	int x;
-
-	x = 0;
-	if (!str)
-	{
-		return (0);
-	}
-	while (str[x] != '\0')
-	{
-		x++;
-	}
-	return (x);
-}
-
 char		*strjoin(char *s1, char *s2)
 {
-	char		*result;
-	int			x;
-	int			y;
+	char	*result;
+	int		x;
+	int		y;
 
 	x = 0;
 	y = 0;
@@ -79,15 +63,16 @@ char		*cut_str_till(char *buf, int str_size)
 char		*make_new_line(char *old_line, int index)
 {
 	char	*new_wait_line;
-	int 	line_length;
+	int		line_length;
 	int		x;
-	
+
 	x = 0;
 	line_length = get_strlen(old_line);
 	new_wait_line = malloc(sizeof(char) * (line_length - index) + 1);
 	if (!new_wait_line)
+	{
 		return (0);
-
+	}
 	while (old_line[index] != '\0')
 	{
 		new_wait_line[x] = old_line[index];
@@ -112,7 +97,7 @@ char		*read_line(char **waitingline)
 	{
 		if ((*waitingline)[x] == '\n')
 		{
-			result = cut_str_till(*waitingline, x);		
+			result = cut_str_till(*waitingline, x);
 			new_line = make_new_line(*waitingline, x + 1);
 			free(*waitingline);
 			*waitingline = new_line;

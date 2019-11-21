@@ -6,13 +6,29 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/07 16:25:38 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/21 14:47:44 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2019/11/21 15:40:59 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_bufsize(int fd, int *end_of_file)
+int			get_strlen(char *str)
+{
+	int x;
+
+	x = 0;
+	if (!str)
+	{
+		return (0);
+	}
+	while (str[x] != '\0')
+	{
+		x++;
+	}
+	return (x);
+}
+
+char		*read_bufsize(int fd, int *end_of_file)
 {
 	char			**resultpointer;
 	char			*result;
@@ -40,27 +56,35 @@ char	*read_bufsize(int fd, int *end_of_file)
 	return (result);
 }
 
-int		get_next_line(int fd, char **line)
+int			continue_or_end(int *end_of_file, char **waitingline, char ***line)
+{
+	if (*end_of_file == 1)
+	{
+		**line = *waitingline;
+		*waitingline = 0;
+		free(*waitingline);
+		return (0);
+	}
+	**line = read_line(waitingline);
+	return (1);
+}
+
+int			get_next_line(int fd, char **line)
 {
 	static char		*waitingline;
 	int				end_of_file;
-
 	char			*buf_result;
 	char			*temp;
 
 	if (!fd || !line)
-	{
 		return (-1);
-	}
 	end_of_file = 0;
 	while (!enough_for_one_line(waitingline) && end_of_file != 1)
 	{
 		if (waitingline == 0)
-		{
 			waitingline = read_bufsize(fd, &end_of_file);
-		}
 		else
-		{	
+		{
 			buf_result = read_bufsize(fd, &end_of_file);
 			temp = waitingline;
 			waitingline = strjoin(waitingline, buf_result);
@@ -68,39 +92,7 @@ int		get_next_line(int fd, char **line)
 			free(buf_result);
 		}
 		if (!waitingline)
-		{
 			return (-1);
-		}
 	}
-	if (end_of_file == 1)
-	{
-		*line = waitingline;
-		waitingline = 0;
-		free(waitingline);
-		return (0);
-	}
-
-	*line = read_line(&waitingline);
-
-	return (1);
+	return (continue_or_end(&end_of_file, &waitingline, &line));
 }
-
-// int main()
-// {
-// 	int fd;
-// 	char	*str;
-
-// 	fd = open("text.txt", O_RDONLY);
-
-// 	while (get_next_line(fd, &str) == 1)
-// 	{
-// 		free(str);
-// 	}
-
-// 	while (1)
-// 	{
-
-// 	}
-
-// 	return (0);
-// }
