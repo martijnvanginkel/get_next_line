@@ -6,7 +6,7 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/07 16:25:38 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/21 12:41:15 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2019/11/21 14:47:44 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		get_next_line(int fd, char **line)
 	int				end_of_file;
 
 	char			*buf_result;
+	char			*temp;
 
 	if (!fd || !line)
 	{
@@ -61,7 +62,9 @@ int		get_next_line(int fd, char **line)
 		else
 		{	
 			buf_result = read_bufsize(fd, &end_of_file);
+			temp = waitingline;
 			waitingline = strjoin(waitingline, buf_result);
+			free(temp);
 			free(buf_result);
 		}
 		if (!waitingline)
@@ -91,7 +94,7 @@ int		get_next_line(int fd, char **line)
 
 // 	while (get_next_line(fd, &str) == 1)
 // 	{
-
+// 		free(str);
 // 	}
 
 // 	while (1)

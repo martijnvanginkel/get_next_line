@@ -6,7 +6,7 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/19 13:05:24 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/21 12:34:47 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2019/11/21 14:40:37 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,32 @@ char		*cut_str_till(char *buf, int str_size)
 	return (result);
 }
 
+char		*make_new_line(char *old_line, int index)
+{
+	char	*new_wait_line;
+	int 	line_length;
+	int		x;
+	
+	x = 0;
+	line_length = get_strlen(old_line);
+	new_wait_line = malloc(sizeof(char) * (line_length - index) + 1);
+	if (!new_wait_line)
+		return (0);
+
+	while (old_line[index] != '\0')
+	{
+		new_wait_line[x] = old_line[index];
+		index++;
+		x++;
+	}
+	new_wait_line[x] = '\0';
+	return (new_wait_line);
+}
+
 char		*read_line(char **waitingline)
 {
 	char	*result;
+	char	*new_line;
 	int		linelen;
 	int		x;
 
@@ -90,7 +113,9 @@ char		*read_line(char **waitingline)
 		if ((*waitingline)[x] == '\n')
 		{
 			result = cut_str_till(*waitingline, x);		
-			*waitingline = &(*waitingline)[x + 1];
+			new_line = make_new_line(*waitingline, x + 1);
+			free(*waitingline);
+			*waitingline = new_line;
 			return (result);
 		}
 		x++;
