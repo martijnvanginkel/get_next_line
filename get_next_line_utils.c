@@ -6,7 +6,7 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/19 13:05:24 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/20 13:55:36 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2019/11/21 12:34:47 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char		*read_line(char **waitingline)
 	{
 		if ((*waitingline)[x] == '\n')
 		{
-			result = cut_str_till(*waitingline, x);
+			result = cut_str_till(*waitingline, x);		
 			*waitingline = &(*waitingline)[x + 1];
 			return (result);
 		}

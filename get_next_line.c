@@ -6,7 +6,7 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/07 16:25:38 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/20 16:08:42 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2019/11/21 12:41:15 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ char	*read_bufsize(int fd, int *end_of_file)
 int		get_next_line(int fd, char **line)
 {
 	static char		*waitingline;
-	char			*temp;
 	int				end_of_file;
 
+	char			*buf_result;
+
 	if (!fd || !line)
+	{
 		return (-1);
+	}
 	end_of_file = 0;
 	while (!enough_for_one_line(waitingline) && end_of_file != 1)
 	{
@@ -56,11 +59,15 @@ int		get_next_line(int fd, char **line)
 			waitingline = read_bufsize(fd, &end_of_file);
 		}
 		else
-		{
-			waitingline = strjoin(waitingline, read_bufsize(fd, &end_of_file));
+		{	
+			buf_result = read_bufsize(fd, &end_of_file);
+			waitingline = strjoin(waitingline, buf_result);
+			free(buf_result);
 		}
 		if (!waitingline)
+		{
 			return (-1);
+		}
 	}
 	if (end_of_file == 1)
 	{
@@ -69,8 +76,9 @@ int		get_next_line(int fd, char **line)
 		free(waitingline);
 		return (0);
 	}
+
 	*line = read_line(&waitingline);
-	// free(*line);
+
 	return (1);
 }
 
