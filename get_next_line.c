@@ -6,7 +6,7 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/07 16:25:38 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/21 15:40:59 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2019/11/25 09:09:14 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,41 @@ int			continue_or_end(int *end_of_file, char **waitingline, char ***line)
 	return (1);
 }
 
+void		set_and_free_values(char **waitingline, char **buf_result)
+{
+	char	*temp;
+
+	temp = *waitingline;
+	*waitingline = strjoin(*waitingline, *buf_result);
+	free(temp);
+	free(*buf_result);
+	return ;
+}
+
 int			get_next_line(int fd, char **line)
 {
 	static char		*waitingline;
 	int				end_of_file;
 	char			*buf_result;
-	char			*temp;
 
-	if (!fd || !line)
+	if (!line)
 		return (-1);
 	end_of_file = 0;
 	while (!enough_for_one_line(waitingline) && end_of_file != 1)
 	{
 		if (waitingline == 0)
+		{
 			waitingline = read_bufsize(fd, &end_of_file);
+			if (!waitingline)
+				return (-1);
+		}
 		else
 		{
 			buf_result = read_bufsize(fd, &end_of_file);
-			temp = waitingline;
-			waitingline = strjoin(waitingline, buf_result);
-			free(temp);
-			free(buf_result);
+			if (!buf_result)
+				return (-1);
+			set_and_free_values(&waitingline, &buf_result);
 		}
-		if (!waitingline)
-			return (-1);
 	}
 	return (continue_or_end(&end_of_file, &waitingline, &line));
 }

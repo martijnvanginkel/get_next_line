@@ -6,7 +6,7 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/19 13:07:10 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/21 15:51:48 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2019/11/22 16:13:15 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+int		get_next_line(int fd, char **line);
+void	set_and_free_values(char **waitingline, char **buf_result);
+int		continue_or_end(int *end_of_file, char **waitingline, char ***line);
 int		enough_for_one_line(char *line);
 char	*read_bufsize(int fd, int *end_of_file);
 char	*read_line(char **waitingline);
