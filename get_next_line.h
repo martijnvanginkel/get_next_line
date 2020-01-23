@@ -6,12 +6,14 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/19 13:07:10 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/22 16:13:15 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2020/01/23 11:41:31 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# define BUFFER_SIZE 32
 
 # include <stdlib.h>
 # include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: mvan-gin <mvan-gin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/07 16:25:38 by mvan-gin       #+#    #+#                */
-/*   Updated: 2019/11/25 09:09:14 by mvan-gin      ########   odam.nl         */
+/*   Updated: 2020/01/23 11:41:02 by mvan-gin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int			get_strlen(char *str)
 
 char		*read_bufsize(int fd, int *end_of_file)
 {
-	char			**resultpointer;
 	char			*result;
 	char			buf[BUFFER_SIZE + 1];
 	int				bytes_read;
@@ -52,7 +51,6 @@ char		*read_bufsize(int fd, int *end_of_file)
 		x++;
 	}
 	result[x] = '\0';
-	resultpointer = &result;
 	return (result);
 }
 
