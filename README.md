@@ -1,4 +1,5 @@
-# get_next_line
+# Description
 C program to read text out of files line for line.
 
-Compile with gcc get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=[pick size]
+# Usage
+Compile with gcc get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=[size]
